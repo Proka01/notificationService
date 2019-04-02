@@ -9,22 +9,22 @@ import org.springframework.stereotype.Component;
 public class CommentMapper {
 
     public CommentDto commentToCommentDto(Comment comment) {
-        return CommentDto.builder()
-                .text(comment.getText())
-                .user(comment.getUser())
-                .productRating(comment.getProductRating())
-                .id(comment.getId())
-                .build();
+        CommentDto commentDto = new CommentDto();
+        commentDto.setId(comment.getId());
+        commentDto.setText(comment.getText());
+        commentDto.setUser(comment.getUser());
+        commentDto.setId(comment.getId());
+        return commentDto;
     }
 
     public Comment commentDtoToComment(CommentDto commentDto, Product product) {
-        return Comment.builder()
-                .text(commentDto.getText())
-                .user(commentDto.getUser())
-                .productRating(commentDto.getProductRating())
-                .product(product)
-                .id(commentDto.getId())
-                .build();
+        Comment comment = new Comment();
+        comment.setId(commentDto.getId());
+        comment.setText(commentDto.getText());
+        comment.setUser(commentDto.getUser());
+        comment.setId(commentDto.getId());
+        comment.setProduct(product);
+        return comment;
     }
 
 }

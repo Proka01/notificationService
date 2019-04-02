@@ -5,7 +5,6 @@ import com.raf.restdemo.service.ProductService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -23,10 +22,14 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/product")
-@RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductService productService;
+    private ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
 
     @ApiOperation(value = "Get all products")
     @ApiImplicitParams({

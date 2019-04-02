@@ -8,21 +8,21 @@ import org.springframework.stereotype.Component;
 public class ProductMapper {
 
     public ProductDto productToProductDto(Product product) {
-        return ProductDto.builder()
-                .title(product.getTitle())
-                .description(product.getDescription())
-                .price(product.getPrice())
-                .id(product.getId())
-                .build();
+        ProductDto productDto = new ProductDto();
+        productDto.setId(product.getId());
+        productDto.setTitle(product.getTitle());
+        productDto.setDescription(product.getDescription());
+        productDto.setId(product.getId());
+        return productDto;
     }
 
     public Product productDtoToProduct(ProductDto productDto) {
-        return Product.builder()
-                .title(productDto.getTitle())
-                .description(productDto.getDescription())
-                .price(productDto.getPrice())
-                .id(productDto.getId())
-                .build();
+        Product product = new Product();
+        product.setId(productDto.getId());
+        product.setTitle(productDto.getTitle());
+        product.setDescription(productDto.getDescription());
+        product.setId(productDto.getId());
+        return product;
     }
 
 }

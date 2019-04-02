@@ -5,7 +5,6 @@ import com.raf.restdemo.service.CommentService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -21,10 +20,13 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/product/{id}/comment")
-@RequiredArgsConstructor
 public class CommentController {
 
-    private final CommentService commentService;
+    private CommentService commentService;
+
+    public CommentController (CommentService commentService) {
+        this.commentService = commentService;
+    }
 
     @ApiOperation(value = "Get all comments")
     @ApiImplicitParams({
