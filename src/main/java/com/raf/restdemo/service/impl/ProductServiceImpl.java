@@ -2,11 +2,14 @@ package com.raf.restdemo.service.impl;
 
 import com.raf.restdemo.domain.Product;
 import com.raf.restdemo.dto.ProductDto;
+import com.raf.restdemo.exception.CustomException;
+import com.raf.restdemo.exception.ErrorCode;
 import com.raf.restdemo.mapper.ProductMapper;
 import com.raf.restdemo.repository.ProductRepository;
 import com.raf.restdemo.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +35,8 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto findById(Long id) {
         return productRepository.findById(id)
                 .map(productMapper::productToProductDto)
-                .orElseThrow(() -> new RuntimeException("Project not found"));
+                .orElseThrow(() -> new CustomException("Product not found", ErrorCode.RESOURCE_NOT_FOUND
+                        , HttpStatus.NOT_FOUND));
     }
 
     @Override
