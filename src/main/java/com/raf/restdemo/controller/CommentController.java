@@ -1,5 +1,6 @@
 package com.raf.restdemo.controller;
 
+import com.raf.restdemo.dto.CommentCreateDto;
 import com.raf.restdemo.dto.CommentDto;
 import com.raf.restdemo.service.CommentService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 
@@ -24,7 +26,7 @@ public class CommentController {
 
     private CommentService commentService;
 
-    public CommentController (CommentService commentService) {
+    public CommentController(CommentService commentService) {
         this.commentService = commentService;
     }
 
@@ -37,13 +39,13 @@ public class CommentController {
                             "Default sort order is ascending. " +
                             "Multiple sort criteria are supported.")})
     @GetMapping
-    public ResponseEntity<Page<CommentDto>> findAll(@PathVariable("id") Long id, Pageable pageable) {
+    public ResponseEntity<Page<CommentDto>> findAll(@PathVariable("id") Long id, @ApiIgnore Pageable pageable) {
         return new ResponseEntity<>(commentService.findAllByProductId(id, pageable), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<CommentDto> add(@PathVariable("id") Long id, @RequestBody @Valid CommentDto commentDto) {
-        return new ResponseEntity<>(commentService.addCommentOnProduct(id, commentDto), HttpStatus.OK);
+    public ResponseEntity<CommentDto> add(@PathVariable("id") Long id, @RequestBody @Valid CommentCreateDto commentCreateDto) {
+        return new ResponseEntity<>(commentService.addCommentOnProduct(id, commentCreateDto), HttpStatus.OK);
     }
 
 }

@@ -1,7 +1,9 @@
 package com.raf.restdemo.service.impl;
 
 import com.raf.restdemo.domain.Product;
+import com.raf.restdemo.dto.ProductCreateDto;
 import com.raf.restdemo.dto.ProductDto;
+import com.raf.restdemo.dto.ProductUpdateDto;
 import com.raf.restdemo.exception.CustomException;
 import com.raf.restdemo.exception.ErrorCode;
 import com.raf.restdemo.mapper.ProductMapper;
@@ -40,19 +42,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto add(ProductDto productDto) {
+    public ProductDto add(ProductCreateDto productCreateDto) {
         return productMapper.productToProductDto(productRepository
-                .save(productMapper.productDtoToProduct(productDto)));
+                .save(productMapper.productCreateDtoToProduct(productCreateDto)));
     }
 
     @Override
-    public ProductDto update(Long id, ProductDto productDto) {
+    public ProductDto update(Long id, ProductUpdateDto productUpdateDto) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Project not found"));
 
-        product.setTitle(productDto.getTitle());
-        product.setDescription(productDto.getDescription());
-        product.setPrice(productDto.getPrice());
+        product.setTitle(productUpdateDto.getTitle());
+        product.setDescription(productUpdateDto.getDescription());
+        product.setPrice(productUpdateDto.getPrice());
 
         return productMapper.productToProductDto(productRepository.save(product));
     }

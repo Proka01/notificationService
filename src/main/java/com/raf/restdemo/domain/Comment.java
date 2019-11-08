@@ -85,5 +85,4 @@ public class Comment {
     public void setUpdatedDate(Instant updatedDate) {
         this.updatedDate = updatedDate;
     }
-
 }

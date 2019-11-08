@@ -1,6 +1,8 @@
 package com.raf.restdemo.controller;
 
+import com.raf.restdemo.dto.ProductCreateDto;
 import com.raf.restdemo.dto.ProductDto;
+import com.raf.restdemo.dto.ProductUpdateDto;
 import com.raf.restdemo.service.ProductService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 
@@ -40,7 +43,7 @@ public class ProductController {
                             "Default sort order is ascending. " +
                             "Multiple sort criteria are supported.")})
     @GetMapping
-    public ResponseEntity<Page<ProductDto>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<ProductDto>> findAll(@ApiIgnore Pageable pageable) {
         return new ResponseEntity<>(productService.findAll(pageable), HttpStatus.OK);
     }
 
@@ -50,15 +53,15 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDto> add(@RequestBody @Valid ProductDto productDto) {
-        return new ResponseEntity<>(productService.add(productDto), HttpStatus.CREATED);
+    public ResponseEntity<ProductDto> add(@RequestBody @Valid ProductCreateDto productCreateDto) {
+        return new ResponseEntity<>(productService.add(productCreateDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductDto> update(@PathVariable("id") Long id
-            , @RequestBody @Valid ProductDto productDto) {
+            , @RequestBody @Valid ProductUpdateDto productUpdateDto) {
 
-        return new ResponseEntity<>(productService.update(id, productDto), HttpStatus.OK);
+        return new ResponseEntity<>(productService.update(id, productUpdateDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

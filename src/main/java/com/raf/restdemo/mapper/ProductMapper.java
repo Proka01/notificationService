@@ -1,6 +1,7 @@
 package com.raf.restdemo.mapper;
 
 import com.raf.restdemo.domain.Product;
+import com.raf.restdemo.dto.ProductCreateDto;
 import com.raf.restdemo.dto.ProductDto;
 import org.springframework.stereotype.Component;
 
@@ -16,13 +17,11 @@ public class ProductMapper {
         return productDto;
     }
 
-    public Product productDtoToProduct(ProductDto productDto) {
+    public Product productCreateDtoToProduct(ProductCreateDto productCreateDto) {
         Product product = new Product();
-        product.setId(productDto.getId());
-        product.setTitle(productDto.getTitle());
-        product.setDescription(productDto.getDescription());
-        product.setPrice(productDto.getPrice());
+        product.setTitle(productCreateDto.getTitle());
+        product.setDescription(productCreateDto.getDescription());
+        product.setPrice(productCreateDto.getPrice());
         return product;
     }
-
 }
