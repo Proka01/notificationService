@@ -10,5 +10,4 @@ public interface CommentService {
     Page<CommentDto> findAllByProductId(Long productId, Pageable pageable);
 
     CommentDto addCommentOnProduct(Long productId, CommentCreateDto commentAddDto);
-
 }

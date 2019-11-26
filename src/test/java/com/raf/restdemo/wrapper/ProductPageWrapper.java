@@ -1,6 +1,5 @@
 package com.raf.restdemo.wrapper;
 
-import com.raf.restdemo.domain.Product;
 import com.raf.restdemo.dto.ProductDto;
 
 import java.util.List;

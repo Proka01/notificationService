@@ -11,13 +11,9 @@ public class ControllerErrorHandler {
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<?> handleResourceNotFoundException(CustomException exception) {
-
-        ErrorDetails errorDetails = new ErrorDetails();
-        errorDetails.setError(exception.getMessage());
-        errorDetails.setErrorCode(exception.getErrorCode());
-        errorDetails.setTimestamp(Instant.now());
-
+        //Create error details object based on exception fields
+        ErrorDetails errorDetails = new ErrorDetails(exception.getErrorCode(), exception.getMessage(), Instant.now());
+        //Return error details and map http status from exception
         return new ResponseEntity<>(errorDetails, exception.getHttpStatus());
     }
-
 }

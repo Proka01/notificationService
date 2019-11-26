@@ -3,6 +3,7 @@ package com.raf.restdemo.service.impl;
 import com.raf.restdemo.domain.Product;
 import com.raf.restdemo.dto.CommentCreateDto;
 import com.raf.restdemo.dto.CommentDto;
+import com.raf.restdemo.exception.NotFoundException;
 import com.raf.restdemo.mapper.CommentMapper;
 import com.raf.restdemo.repository.CommentRepository;
 import com.raf.restdemo.repository.ProductRepository;
@@ -37,8 +38,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentDto addCommentOnProduct(Long productId, CommentCreateDto commentCreateDto) {
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Project not found"));
-
+                .orElseThrow(() -> new NotFoundException(String.format("Product with id: %d not found.", productId)));
+        //Add comment to database
         return commentMapper.commentToCommentDto(commentRepository
                 .save(commentMapper.commentCreateDtoToComment(commentCreateDto, product)));
     }

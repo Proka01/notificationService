@@ -12,8 +12,18 @@ public class ErrorDetails {
     @JsonProperty("error_code")
     private ErrorCode errorCode;
     @JsonProperty("error_message")
-    private String error;
+    private String errorMessage;
     private Instant timestamp;
+
+    public ErrorDetails() {
+
+    }
+
+    public ErrorDetails(ErrorCode errorCode, String errorMessage, Instant timestamp) {
+        this.errorCode = errorCode;
+        this.errorMessage = errorMessage;
+        this.timestamp = timestamp;
+    }
 
     public ErrorCode getErrorCode() {
         return errorCode;
@@ -23,12 +33,12 @@ public class ErrorDetails {
         this.errorCode = errorCode;
     }
 
-    public String getError() {
-        return error;
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
-    public void setError(String error) {
-        this.error = error;
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
     public Instant getTimestamp() {
