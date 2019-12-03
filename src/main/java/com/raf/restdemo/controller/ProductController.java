@@ -1,16 +1,20 @@
 package com.raf.restdemo.controller;
 
+import com.raf.restdemo.dto.OrderCreateDto;
 import com.raf.restdemo.dto.ProductCreateDto;
 import com.raf.restdemo.dto.ProductDto;
 import com.raf.restdemo.dto.ProductUpdateDto;
+import com.raf.restdemo.listener.helper.MessageHelper;
 import com.raf.restdemo.service.ProductService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -28,9 +33,16 @@ import javax.validation.Valid;
 public class ProductController {
 
     private ProductService productService;
+    private JmsTemplate jmsTemplate;
+    private MessageHelper messageHelper;
+    private String orderDestination;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, JmsTemplate jmsTemplate, MessageHelper messageHelper,
+                             @Value("${destination.createOrder}") String orderDestination) {
         this.productService = productService;
+        this.jmsTemplate = jmsTemplate;
+        this.messageHelper = messageHelper;
+        this.orderDestination = orderDestination;
     }
 
 
@@ -70,4 +82,9 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping("/{id}/order")
+    public ResponseEntity<Void> order(@PathVariable("id") Long id, @RequestParam("count") Integer count) {
+        jmsTemplate.convertAndSend(orderDestination, messageHelper.createTextMessage(new OrderCreateDto(count, id)));
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

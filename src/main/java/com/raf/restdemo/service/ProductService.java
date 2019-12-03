@@ -18,4 +18,5 @@ public interface ProductService {
 
     void deleteById(Long id);
 
+    void order(Long id, Integer count);
 }
