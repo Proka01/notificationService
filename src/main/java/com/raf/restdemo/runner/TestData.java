@@ -19,13 +19,13 @@ public class TestData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Notification notification = new
-                Notification("ACTIVATION_EMAIL",
-                "Hello %firstName% %lastName% !",
-                2L,
-                1L,
-                null);
-
-        notificationRepository.save(notification);
+//        Notification notification = new
+//                Notification("ACTIVATION_EMAIL",
+//                "Hello %firstName% %lastName% !",
+//                3L,
+//                1L,
+//                null);
+//
+//        notificationRepository.save(notification);
     }
 }
