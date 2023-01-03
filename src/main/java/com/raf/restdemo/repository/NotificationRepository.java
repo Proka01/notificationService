@@ -1,13 +1,12 @@
 package com.raf.restdemo.repository;
 
-import com.raf.restdemo.domain.User;
+import com.raf.restdemo.domain.Notification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-
-    Optional<User> findUserByUsernameAndPassword(String username, String password);
+public interface NotificationRepository extends JpaRepository<Notification,Long> {
+    Optional<Notification> findNotificationById(Long id);
 }
