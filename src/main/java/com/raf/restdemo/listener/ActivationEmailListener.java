@@ -37,8 +37,6 @@ public class ActivationEmailListener {
     @JmsListener(destination = "${destination.createNotification}", concurrency = "5-10")
     public void addNotifAndSendMail(Message message) throws JMSException, IllegalAccessException {
         ActivationEmailDataDto activationEmailDataDto = messageHelper.getMessage(message, ActivationEmailDataDto.class);
-        activationEmailDataDto.setActivationCode("1234");
-        activationEmailDataDto.setActivationLink("somelink/confirm_registration");
         System.out.println("Nova notifikacia");
 
         Long userId = activationEmailDataDto.getUserId();
