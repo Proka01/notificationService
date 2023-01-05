@@ -9,9 +9,11 @@ import java.sql.Date;
 @Setter
 public class CreateNotificationDto {
 
-    private String notificationType;
-    private String embededMsg;
-    private Long userId;
-    private Date notificationDate;
+    private String emailMsg;
+    private Long clientId;
+    private Long clientEmail;
     private Long managerId;
+    private Long managerEmail;
+    private Date notificationDate;
+    private String notificationType;
 }

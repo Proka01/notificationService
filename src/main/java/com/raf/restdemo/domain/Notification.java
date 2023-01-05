@@ -1,6 +1,8 @@
 package com.raf.restdemo.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -11,26 +13,19 @@ import java.sql.Date;
 @Setter
 @Entity
 @Table
+@AllArgsConstructor
+@NoArgsConstructor
 public class Notification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String notificationType;
-    private String embededMsg;
-    private Long userId;
+    private String emailMsg;
+    private Long clientId;
+    private Long clientEmail;
     private Long managerId;
+    private Long managerEmail;
     private Date notificationDate;
+    private String notificationType;
 
-    public Notification() {
-    }
-
-    public Notification(String notificationType, String embededMsg, Long userId, Long managerId, Date notificationDate) {
-        this.notificationType = notificationType;
-        this.embededMsg = embededMsg;
-        this.userId = userId;
-        this.managerId = managerId;
-        this.notificationDate = notificationDate;
-    }
 }

@@ -18,10 +18,12 @@ public class NotificationMapper {
     {
         Notification notif = new Notification();
         notif.setNotificationType(notificationDto.getNotificationType());
-        notif.setEmbededMsg(notificationDto.getEmbededMsg());
+        notif.setEmailMsg(notificationDto.getEmailMsg());
         notif.setNotificationDate(notificationDto.getNotificationDate());
-        notif.setUserId(notificationDto.getUserId());
+        notif.setClientId(notificationDto.getClientId());
         notif.setManagerId(notificationDto.getManagerId());
+        notif.setClientEmail(notificationDto.getClientEmail());
+        notif.setManagerEmail(notificationDto.getManagerEmail());
 
         return notif;
     }
@@ -30,10 +32,12 @@ public class NotificationMapper {
     {
         Notification notif = new Notification();
         notif.setNotificationType(createNotificationDto.getNotificationType());
-        notif.setEmbededMsg(createNotificationDto.getEmbededMsg());
+        notif.setEmailMsg(createNotificationDto.getEmailMsg());
         notif.setNotificationDate(createNotificationDto.getNotificationDate());
-        notif.setUserId(createNotificationDto.getUserId());
+        notif.setClientId(createNotificationDto.getClientId());
         notif.setManagerId(createNotificationDto.getManagerId());
+        notif.setClientEmail(createNotificationDto.getClientEmail());
+        notif.setManagerEmail(createNotificationDto.getManagerEmail());
 
         return notif;
     }
@@ -44,8 +48,10 @@ public class NotificationMapper {
         notifDto.setNotificationDate(notification.getNotificationDate());
         notifDto.setNotificationType(notification.getNotificationType());
         notifDto.setManagerId(notification.getManagerId());
-        notifDto.setUserId(notifDto.getUserId());
-        notifDto.setEmbededMsg(notification.getEmbededMsg());
+        notifDto.setClientId(notification.getClientId());
+        notifDto.setEmailMsg(notification.getEmailMsg());
+        notifDto.setClientEmail(notification.getClientEmail());
+        notifDto.setManagerEmail(notification.getManagerEmail());
 
         return notifDto;
     }
