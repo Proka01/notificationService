@@ -27,9 +27,11 @@ public class TestData implements CommandLineRunner {
 //
 //        notifType.setType("ACTIVATION_EMAIL");
 //        notifType.setEmbededMsg("Hello %firstName% %lastName% !!!");
-//
 //        notificationTypeRepository.save(notifType);
 
+//        notifType.setType("CAR_RESERVATION_EMAIL");
+//        notifType.setEmbededMsg("Hello %firstName% %lastName% you have rented %carBrand% %carModel% with plates %registrationNum%!!!");
+//        notificationTypeRepository.save(notifType);
 
 //        Notification notification = new
 //                Notification("ACTIVATION_EMAIL",

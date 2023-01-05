@@ -6,18 +6,17 @@ import com.raf.restdemo.listener.helper.MessageHelper;
 import com.raf.restdemo.service.EmailService;
 import com.raf.restdemo.service.NotificationService;
 import com.raf.restdemo.service.NotificationTypeService;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
+import java.sql.Date;
+import java.time.LocalDate;
 
 @Component
-public class NotificationListener {
+public class ActivationEmailListener {
     private MessageHelper messageHelper;
     private NotificationService notificationService;
     private NotificationTypeService notificationTypeService;
@@ -26,8 +25,8 @@ public class NotificationListener {
     private RestTemplate userServiceApiClient;
 
 
-    public NotificationListener(MessageHelper messageHelper, NotificationService notificationService,
-                                EmailService emailService, RestTemplate userServiceApiClient,NotificationTypeService notificationTypeService) {
+    public ActivationEmailListener(MessageHelper messageHelper, NotificationService notificationService,
+                                   EmailService emailService, RestTemplate userServiceApiClient, NotificationTypeService notificationTypeService) {
         this.messageHelper = messageHelper;
         this.notificationService = notificationService;
         this.emailService = emailService;
@@ -43,6 +42,7 @@ public class NotificationListener {
         System.out.println("Nova notifikacia");
 
         Long userId = activationEmailDataDto.getUserId();
+        String userEmail = activationEmailDataDto.getUserEmail();
         System.out.println(userId);
 
 //REST template kontaktiranje drugog servisa
@@ -56,7 +56,10 @@ public class NotificationListener {
 
         //TODO ovo clientDto.getBody().getEmail() treba staviti umesto mog mock mejl-a
         emailService.sendSimpleMessage("aleksa.prokic888@gmail.com", "ACTIVATION_EMAIL", mailMsg);
-        //notificationService.insertNotification(createNotificationDto);
+
+        CreateNotificationDto createNotificationDto =
+                new CreateNotificationDto(mailMsg,userId,userEmail,null,null, Date.valueOf(LocalDate.now()),"ACTIVATION_EMAIL");
+        notificationService.insertNotification(createNotificationDto);
 
     }
 }

@@ -7,12 +7,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ActivationEmailDataDto {
+public class CarReservationEmailDataDto {
     private Long userId;
-    private String userEmail;
+    private Long managerId;
     private String notificationType;
     private String firstName;
     private String lastName;
-    private String activationLink;
-    private String activationCode;
+    private String carBrand;
+    private String carModel;
+    private String registrationNum;
 }
