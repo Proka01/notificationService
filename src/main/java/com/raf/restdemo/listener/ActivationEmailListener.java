@@ -6,6 +6,8 @@ import com.raf.restdemo.listener.helper.MessageHelper;
 import com.raf.restdemo.service.EmailService;
 import com.raf.restdemo.service.NotificationService;
 import com.raf.restdemo.service.NotificationTypeService;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -44,8 +46,8 @@ public class ActivationEmailListener {
         System.out.println(userId);
 
 //REST template kontaktiranje drugog servisa
-//        ResponseEntity<ClientDto> clientDto = userServiceApiClient.exchange("/client/" + client_id, HttpMethod.GET,
-//                null, ClientDto.class);
+        ResponseEntity<ClientDto> clientDto = userServiceApiClient.exchange("/client/" + userId, HttpMethod.GET,
+                null, ClientDto.class);
 
 
         NotificationTypeDto notificationTypeDto = notificationTypeService.getNotificationTypeByType(activationEmailDataDto.getNotificationType());
@@ -53,7 +55,7 @@ public class ActivationEmailListener {
         String mailMsg = mailTextFormater.formatText(notificationTypeDto.getEmbededMsg(), activationEmailDataDto);
 
         //TODO ovo clientDto.getBody().getEmail() treba staviti umesto mog mock mejl-a
-        emailService.sendSimpleMessage("aleksa.prokic888@gmail.com", "ACTIVATION_EMAIL", mailMsg);
+        emailService.sendSimpleMessage(clientDto.getBody().getEmail(), "ACTIVATION_EMAIL", mailMsg);
 
         CreateNotificationDto createNotificationDto =
                 new CreateNotificationDto(mailMsg,userId,userEmail,null,null, Date.valueOf(LocalDate.now()),"ACTIVATION_EMAIL");

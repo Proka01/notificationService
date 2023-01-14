@@ -44,7 +44,6 @@ public class CarRentEmailListener {
         String mailMsg = mailTextFormater.formatText(notificationTypeDto.getEmbededMsg(), carReservationEmailDataDto);
 
         //TODO ovo clientDto.getBody().getEmail() treba staviti umesto mog mock mejl-a
-        emailService.sendSimpleMessage("aleksa.prokic888@gmail.com", "CAR_RESERVATION_EMAIL", mailMsg);
 
         Long clientId = carReservationEmailDataDto.getUserId();
         Long managerId = carReservationEmailDataDto.getManagerId();
@@ -53,6 +52,9 @@ public class CarRentEmailListener {
         ResponseEntity<ManagerDto> managerDto = userServiceApiClient.exchange("/manager/" + managerId, HttpMethod.GET, null, ManagerDto.class);
         String clientEmail = clientDto.getBody().getEmail();
         String managerEmail = managerDto.getBody().getEmail();
+
+        emailService.sendSimpleMessage(clientEmail, "CAR_RESERVATION_EMAIL", mailMsg);
+
 
         CreateNotificationDto createNotificationDto =
                 new CreateNotificationDto(mailMsg,clientId,clientEmail,managerId,managerEmail, Date.valueOf(LocalDate.now()),"ACTIVATION_EMAIL");
