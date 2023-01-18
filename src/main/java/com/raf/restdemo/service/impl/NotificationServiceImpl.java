@@ -44,4 +44,17 @@ public class NotificationServiceImpl implements NotificationService {
 
         return notificationDtoList;
     }
+
+    @Override
+    public List<NotificationDto> getAllNotifications() {
+        List<Notification> notificationList = notificationRepository.getAllNotifications();
+        List<NotificationDto> notificationDtoList = new ArrayList<>();
+
+        for(Notification notif : notificationList)
+        {
+            notificationDtoList.add(notificationMapper.notificationToNotificationDto(notif));
+        }
+
+        return notificationDtoList;
+    }
 }

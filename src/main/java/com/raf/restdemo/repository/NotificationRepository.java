@@ -14,4 +14,7 @@ public interface NotificationRepository extends JpaRepository<Notification,Long>
 
     //@Query(value = "SELECT * FROM reservationServiceDB.vehicle ss JOIN reservationServiceDB.company s ON(ss.company_id=s.id)  WHERE s.city = ?1 AND s.id = ?2", nativeQuery = true)
     List<Notification> findNotificationsByClientId(Long id);
+
+    @Query(value = "SELECT * FROM notificationservicedb.notification", nativeQuery = true)
+    List<Notification> getAllNotifications();
 }

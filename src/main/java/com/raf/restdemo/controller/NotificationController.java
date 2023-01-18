@@ -2,6 +2,7 @@ package com.raf.restdemo.controller;
 
 import com.raf.restdemo.dto.CreateNotificationDto;
 import com.raf.restdemo.dto.NotificationDto;
+import com.raf.restdemo.secutiry.CheckSecurity;
 import com.raf.restdemo.secutiry.service.TokenService;
 import com.raf.restdemo.service.NotificationService;
 import org.springframework.http.HttpStatus;
@@ -32,5 +33,12 @@ public class NotificationController {
     public ResponseEntity<List<NotificationDto>> getNotificationsForClientId(@RequestHeader String authorization) {
         Long id = tokenService.parseId(authorization);
         return new ResponseEntity<>(notificationService.getAllClientNotification(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllNotifications")
+    @CheckSecurity(roles = {"ROLE_ADMIN"})
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<List<NotificationDto>> getAllNotifications(@RequestHeader String authorization) {
+        return new ResponseEntity<>(notificationService.getAllNotifications(), HttpStatus.OK);
     }
 }
