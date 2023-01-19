@@ -39,21 +39,28 @@ public class CarRentEmailListener {
         CarReservationEmailDataDto carReservationEmailDataDto = messageHelper.getMessage(message, CarReservationEmailDataDto.class);
         System.out.println("Car rent notifikacija");
 
-        NotificationTypeDto notificationTypeDto = notificationTypeService.getNotificationTypeByType(carReservationEmailDataDto.getNotificationType());
-        MailTextFormater mailTextFormater = new MailTextFormater();
-        String mailMsg = mailTextFormater.formatText(notificationTypeDto.getEmbededMsg(), carReservationEmailDataDto);
-
         //TODO ovo clientDto.getBody().getEmail() treba staviti umesto mog mock mejl-a
 
         Long clientId = carReservationEmailDataDto.getUserId();
         Long managerId = carReservationEmailDataDto.getManagerId();
+        System.out.println("Manager ID: " + managerId);
 
         ResponseEntity<ClientDto> clientDto = userServiceApiClient.exchange("/client/" + clientId, HttpMethod.GET, null, ClientDto.class);
         ResponseEntity<ManagerDto> managerDto = userServiceApiClient.exchange("/manager/" + managerId, HttpMethod.GET, null, ManagerDto.class);
         String clientEmail = clientDto.getBody().getEmail();
         String managerEmail = managerDto.getBody().getEmail();
+        String firstName = clientDto.getBody().getFirstName();
+        String lastName = clientDto.getBody().getLastName();
+
+        carReservationEmailDataDto.setFirstName(firstName);
+        carReservationEmailDataDto.setLastName(lastName);
+
+        NotificationTypeDto notificationTypeDto = notificationTypeService.getNotificationTypeByType(carReservationEmailDataDto.getNotificationType());
+        MailTextFormater mailTextFormater = new MailTextFormater();
+        String mailMsg = mailTextFormater.formatText(notificationTypeDto.getEmbededMsg(), carReservationEmailDataDto);
 
         emailService.sendSimpleMessage(clientEmail, "CAR_RESERVATION_EMAIL", mailMsg);
+        emailService.sendSimpleMessage(managerEmail,"CAR_RESERVATION_EMAIL", "Info about client rent: "+mailMsg);
 
 
         CreateNotificationDto createNotificationDto =
