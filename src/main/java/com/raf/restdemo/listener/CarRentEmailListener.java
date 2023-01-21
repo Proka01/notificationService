@@ -58,13 +58,14 @@ public class CarRentEmailListener {
         NotificationTypeDto notificationTypeDto = notificationTypeService.getNotificationTypeByType(carReservationEmailDataDto.getNotificationType());
         MailTextFormater mailTextFormater = new MailTextFormater();
         String mailMsg = mailTextFormater.formatText(notificationTypeDto.getEmbededMsg(), carReservationEmailDataDto);
+        String type = carReservationEmailDataDto.getNotificationType();
 
-        emailService.sendSimpleMessage(clientEmail, "CAR_RESERVATION_EMAIL", mailMsg);
-        emailService.sendSimpleMessage(managerEmail,"CAR_RESERVATION_EMAIL", "Info about client rent: "+mailMsg);
+        emailService.sendSimpleMessage(clientEmail, type, mailMsg);
+        emailService.sendSimpleMessage(managerEmail,type, "Info about client rent: "+mailMsg);
 
 
         CreateNotificationDto createNotificationDto =
-                new CreateNotificationDto(mailMsg,clientId,clientEmail,managerId,managerEmail, Date.valueOf(LocalDate.now()),"ACTIVATION_EMAIL");
+                new CreateNotificationDto(mailMsg,clientId,clientEmail,managerId,managerEmail, Date.valueOf(LocalDate.now()),type);
         notificationService.insertNotification(createNotificationDto);
     }
 }
